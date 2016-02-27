@@ -1,0 +1,7 @@
+http://localhost/ssb-forum/index.php/generate/api?model=Batch&cols=name,created_at
+
+http://localhost/ssb-forum/index.php/generate/api?model=Group&cols=title,description,batch,created_at
+  
+http://localhost/ssb-forum/index.php/generate/api?model=Message&cols=sender,reciever,message,created_at
+
+http://localhost/ssb-forum/index.php/generate/api?model=User&cols=username,email,password,batch,created_at
