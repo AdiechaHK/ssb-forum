@@ -7,6 +7,11 @@ class {{model_title}}_model extends CI_Model {
   function __construct() {
     parent::__construct();
   }
+
+  function get_all_entries($condition = array()) {
+    $query = $this->db->get_where('{{table}}', $condition);
+    return $query->result();
+  }
   
   function get_entries($skip = 0, $condition = array()) {
     $query = $this->db->get_where('{{table}}', $condition, 10, $skip);

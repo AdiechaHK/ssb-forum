@@ -1,0 +1,42 @@
+<div data-ng-controller="GroupController">
+  <div class="container">
+    <br/>
+    <div data-ng-include="header_url"></div>
+ 
+    <div class="row">
+      <div class="col-md-12">
+        <a class="btn btn-info" href="#/dashboard"> Back to Group list </a>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-md-12">
+        <h3>{{group.title}}</h3>
+        <p>{{group.description}}</p>
+      </div>  
+    </div>
+
+    <div class="row" data-ng-if="groupPostList.length">
+      <div class="col-md-12" data-ng-repeat="post in groupPostList">
+        <strong> {{post.uid | username:affectedMembers}} </strong>
+        {{post.text}}
+      </div>
+    </div>
+
+    <div class="row" data-ng-if="!groupPostList.length">
+      <div class="col-md-12">
+        No posts found for this group
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-md-6 col-md-offset-3">
+
+        <textarea id="post-text" class="form-control" data-ng-model="newPost.text"></textarea>
+        <br/>
+        <button class="btn btn-success pull-right" data-ng-click="post()">Post</button>
+      </div>
+    </div>
+
+  </div>
+</div>

@@ -10,6 +10,13 @@ class Api extends CI_Controller {
     echo json_encode($this->$model->get_entries($skip, $this->input->get()));
   }
 
+  public function get_all ($model) {
+
+    $this->load->model($model . "_model", $model);
+
+    echo json_encode($this->$model->get_all_entries($this->input->get()));
+  }
+
   public function get ($model, $id) {
 
     $this->load->model($model . "_model", $model);
@@ -44,14 +51,12 @@ class Api extends CI_Controller {
 
   public function login () {
 
-    echo json_encode($this->input->post());
-    exit;
-
+    $input = json_decode(file_get_contents('php://input'));
 
     $res = array('status' => "fail");
     $this->load->model('User_model', 'user');
     $list = $this->user->get_entries(0, array(
-      'email' => $this->input->post('email')
+      'email' => $input->email
     ));
     switch (sizeof($list)) {
       case 0:
@@ -59,7 +64,8 @@ class Api extends CI_Controller {
         break;
       case 1:
         $user = $list[0];
-        if($user->password == md5($this->input->post('password'))) {
+        if($user->password == md5($input->password)) {
+          $res['user'] = json_encode($user);
           $res['status'] = "success";
         } else {
           $res['message'] = "Invalid password";
@@ -75,16 +81,23 @@ class Api extends CI_Controller {
 
   public function register () {
 
+    $input = json_decode(file_get_contents('php://input'));
+
     $this->load->model('User_model', 'user');
     $save = $this->user->insert_entry(array(
-      "username" => $this->input->post('username'),
-      "email" => $this->input->post('email'),
-      "password" => md5($this->input->post('password')),
-      "batch" => $this->input->post('batch')
+      "username" => $input->username,
+      "email" => $input->email,
+      "password" => md5($input->password),
+      "batch" => $input->batch
     ));
 
     echo json_encode(array('status' => $save));
     exit;
+  }
+
+  public function messages ($user, $friend) {
+    $this->load->model('Message_model', 'message');
+    echo json_encode($this->message->conversation($user, $friend));
   }
 
 }

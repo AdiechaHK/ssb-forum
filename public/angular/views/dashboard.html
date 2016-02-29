@@ -1,0 +1,28 @@
+<div data-ng-controller="DashboardController">
+  <div class="container">
+    <br/>
+    <div data-ng-include="header_url"></div>
+
+    <div class="main-content">
+
+      <div class="row">
+        <div class="col-md-3" data-ng-repeat="group in groupList">
+          <div class="group-block">
+              
+            <!-- 
+            {{group}}
+             -->
+            <h4> {{ group.title }} </h4>
+            <p> {{ group.description }} </p>
+            <a class="btn btn-default" href="#/group/{{group.id}}">Details</a>
+          </div>
+        </div>
+      </div>
+
+      <br/>
+      <div>
+        <button class="btn btn-default" data-ng-click="addGroup()"> Add new Group </button>
+      </div>
+    </div>
+  </div>
+</div>

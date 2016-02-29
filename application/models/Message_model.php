@@ -10,6 +10,11 @@ class Message_model extends CI_Model {
   function __construct() {
     parent::__construct();
   }
+
+  function get_all_entries($condition = array()) {
+    $query = $this->db->get_where('message', $condition);
+    return $query->result();
+  }
   
   function get_entries($skip = 0, $condition = array()) {
     $query = $this->db->get_where('message', $condition, 10, $skip);
@@ -34,6 +39,14 @@ class Message_model extends CI_Model {
 
   function remove_entry($id) {
     return $this->db->delete('message', array('id' => $id));
+  }
+
+  function conversation($user, $friend) {
+    $condition = "(sender = '$user' AND reciever = '$friend') OR (sender = '$friend' AND reciever = '$user')";
+    $this->db->where($condition);
+    $this->db->order_by("create_at", "desc"); 
+    $query = $this->db->get('message');
+    return $query->result();
   }
 
 }

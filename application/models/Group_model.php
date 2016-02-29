@@ -10,6 +10,11 @@ class Group_model extends CI_Model {
   function __construct() {
     parent::__construct();
   }
+
+  function get_all_entries($condition = array()) {
+    $query = $this->db->get_where('group', $condition);
+    return $query->result();
+  }
   
   function get_entries($skip = 0, $condition = array()) {
     $query = $this->db->get_where('group', $condition, 10, $skip);

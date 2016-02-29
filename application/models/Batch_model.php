@@ -9,6 +9,11 @@ class Batch_model extends CI_Model {
     parent::__construct();
   }
   
+  function get_all_entries($condition = array()) {
+    $query = $this->db->get_where('batch', $condition);
+    return $query->result();
+  }
+
   function get_entries($skip = 0, $condition = array()) {
     $query = $this->db->get_where('batch', $condition, 10, $skip);
     return $query->result();
