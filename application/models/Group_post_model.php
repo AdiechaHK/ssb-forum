@@ -11,17 +11,20 @@ class Group_post_model extends CI_Model {
     parent::__construct();
   }
   
-  function get_all_entries($condition = array()) {
+  function get_all_entries($uid, $condition = array()) {
     $query = $this->db->get_where('group_post', $condition);
     return $query->result();
   }
 
-  function get_entries($skip = 0, $condition = array()) {
-    $query = $this->db->get_where('group_post', $condition, 10, $skip);
+  function get_entries($uid, $skip = 0, $condition = array()) {
+    $query = $this->db
+      ->select('`gp`.*, `u`.`username`')
+      ->join('`user` AS u', '`u`.`id` = `gp`.`uid`')
+      ->get_where('group_post AS gp', $condition, 10, $skip);
     return $query->result();
   }
 
-  function get_entry($id) {
+  function get_entry($uid, $id) {
     $query = $this->db->get_where('group_post', array('id' => $id));
     foreach ($query->result() as $record) {
       return $record;

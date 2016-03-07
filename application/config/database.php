@@ -76,9 +76,17 @@ $query_builder = TRUE;
 $db['default'] = array(
 	'dsn'	=> '',
 	'hostname' => 'localhost',
+
+	// Local
 	'username' => 'root',
 	'password' => 'root',
 	'database' => 'testing',
+
+	// Server
+	// 'username' => 'techmate_admin',
+	// 'password' => 'techmate_admin',
+	// 'database' => 'techmate_ssb_forum',
+
 	'dbdriver' => 'mysqli',
 	'dbprefix' => '',
 	'pconnect' => FALSE,

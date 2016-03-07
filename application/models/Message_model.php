@@ -11,17 +11,17 @@ class Message_model extends CI_Model {
     parent::__construct();
   }
 
-  function get_all_entries($condition = array()) {
+  function get_all_entries($uid, $condition = array()) {
     $query = $this->db->get_where('message', $condition);
     return $query->result();
   }
   
-  function get_entries($skip = 0, $condition = array()) {
+  function get_entries($uid, $skip = 0, $condition = array()) {
     $query = $this->db->get_where('message', $condition, 10, $skip);
     return $query->result();
   }
 
-  function get_entry($id) {
+  function get_entry($uid, $id) {
     $query = $this->db->get_where('message', array('id' => $id));
     foreach ($query->result() as $record) {
       return $record;
@@ -41,12 +41,20 @@ class Message_model extends CI_Model {
     return $this->db->delete('message', array('id' => $id));
   }
 
-  function conversation($user, $friend) {
+  function conversation($user, $friend, $skip = null) {
     $condition = "(sender = '$user' AND reciever = '$friend') OR (sender = '$friend' AND reciever = '$user')";
-    $this->db->where($condition);
-    $this->db->order_by("create_at", "desc"); 
-    $query = $this->db->get('message');
-    return $query->result();
+    $this->db
+      ->select('`message`.*, `user`.`username` AS sender')
+      ->join('`user` AS user', '`user`.`id` = `message`.`sender`', 'left')
+      ->where($condition)
+      ->order_by("create_at", "asc"); 
+    if($skip == null) {
+      $query = $this->db->get('message');
+      return $query->result();
+    } else {
+      $query = $this->db->get('message', 10, $skip);
+      return $query->result();
+    }
   }
 
 }

@@ -8,17 +8,17 @@ class Course_model extends CI_Model {
     parent::__construct();
   }
   
-  function get_all_entries($condition = array()) {
+  function get_all_entries($uid, $condition = array()) {
     $query = $this->db->get_where('course', $condition);
     return $query->result();
   }
 
-  function get_entries($skip = 0, $condition = array()) {
+  function get_entries($uid, $skip = 0, $condition = array()) {
     $query = $this->db->get_where('course', $condition, 10, $skip);
     return $query->result();
   }
 
-  function get_entry($id) {
+  function get_entry($uid, $id) {
     $query = $this->db->get_where('course', array('id' => $id));
     foreach ($query->result() as $record) {
       return $record;

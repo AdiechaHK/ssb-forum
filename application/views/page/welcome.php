@@ -1,24 +1,82 @@
-<!DOCTYPE html>
-<html lang="en" data-ng-app="app">
-<head>
-	<title>DEMO WELCOME</title>
-	<link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
-	<link rel="stylesheet" type="text/css" href="<?=base_url('public/css/app.css')?>">
-</head>
-<body>
+  <?php if(isset($noti_msg)) { ?>
+  <div class="ssb-popup-backdrop">
+    <div class="ssb-popup animated zoomIn">
+      <strong>Message:</strong><br/>
+      <?=$noti_msg?>
+    </div>
+  </div>
+  <?php } ?>
+  <div class="container">
 
+    <div class="header">
+      <button type="button" class="navbar-toggle collapsed guest-topmenu" data-toggle="collapse" data-target="#login-form" aria-expanded="false">
+        <span class="sr-only">Toggle navigation</span>
+        <i class="glyphicon glyphicon-log-inglyphicon glyphicon-log-in"></i>
+      </button>
+      <h3 class="">SSB Forum</h3>
+    </div>
 
-<div id="base-path" data-path="<?=base_url()?>" ></div>
-<div data-ng-view></div>
+    <div class="collapse navbar-collapse" id="login-form">
+      
+      <!-- <form class="form-inline pull-right" novalidate> -->
+      <?=form_open('auth/login', array('class'=>"form-inline pull-right"))?>
+        <div class="form-group">
+          <h4>Login</h4>
+        </div>
+        <div class="form-group">
+          <label class="sr-only" for="loginEmail">Email address</label>
+          <input type="email" class="form-control" id="loginEmail" placeholder="Email" name="email">
+        </div>
+        <div class="form-group">
+          <label class="sr-only" for="loginPassword">Password</label>
+          <input type="password" class="form-control" id="loginPassword" placeholder="Password" name="password">
+        </div>
+        <button type="submit" class="btn btn-default">Login</button>
+      <?=form_close()?>
+      <!-- </form> -->
+    </div>
+  
 
+    <hr/>
+    <div class="row">
+      <div class="col-md-7">
+        <div class="quote">
+          "If death strikes, before I prove my blood, I swear I'll kill death." <br/>
+          <span class="pull-right">– Capt. Manoj Kumar Pandey</span>
+        </div>
+      </div>
+      <div class="col-md-4 register">
+		<?=form_open('auth/register')?>
+          <h4>Registration</h4>
+          <hr/>
+          <div class="form-group">
+            <label for="regUsername">Username</label>
+            <input type="text" class="form-control" id="regUsername" placeholder="Enter username" name="username">
+          </div>
 
-<script type="text/javascript" src="https://code.jquery.com/jquery-2.2.1.min.js"></script>
-<script type="text/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
-<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.0/angular.min.js"></script>
-<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.0/angular-cookies.min.js"></script>
-<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.0/angular-route.min.js"></script>
-<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/1.1.2/ui-bootstrap.min.js"></script>
-<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/1.1.2/ui-bootstrap-tpls.min.js"></script>
-<script type="text/javascript" src="<?=base_url('public/angular/src/app.js')?>"></script>
-</body>
-</html>
+          <div class="form-group">
+            <label for="regEmail">Email address</label>
+            <input type="email" class="form-control" id="regEmail" placeholder="Enter email" name="email">
+          </div>
+
+          <div class="form-group">
+            <label for="regPassword">Password</label>
+            <input type="password" class="form-control" id="regPassword" placeholder="Enter password" name="password">
+          </div>
+
+          <div class="form-group">
+            <label for="regBatch">Batch</label>
+            <select class="form-control" id="regBatch" placeholder="Select batch" name="batch">
+            <?php foreach ($batches as $batch) { ?>
+              <option value="<?=$batch->id?>"><?=$batch->name?></option>
+            <?php } ?>
+            </select>
+          </div>
+
+          <button data-ng-click="register()" class="btn btn-primary">Register</button>
+
+        <?=form_close()?>
+      </div>
+      <div class="col-md-1"></div>
+    </div>
+  </div>

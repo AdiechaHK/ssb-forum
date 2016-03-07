@@ -282,6 +282,7 @@ switch (ENVIRONMENT)
 
 	define('VIEWPATH', $view_folder);
 
+	define('PAGE_SIZE', 3);
 /*
  * --------------------------------------------------------------------
  * LOAD THE BOOTSTRAP FILE
